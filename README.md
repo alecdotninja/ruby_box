@@ -20,7 +20,34 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+class MySandbox < RubyBox::Metal
+  times_out_in 1.second
+  
+  executes <<-RUBY
+    # Some boilerplate code
+    class PlayThing
+      attr_reader :name
+    
+      def initialize(name)
+        @name = name
+      end
+    end
+  RUBY
+end
+
+untrusted_program = <<-RUBY
+  puts "Hello, world"
+  
+  car = PlayThing.new("Car")
+  car.name
+RUBY
+
+my_sandbox = MySandbox.new
+my_sandbox.execute(untrusted_program) #=> "Car"
+my_sandbox.stdout #=> ["Hello, world"]
+
+```
 
 ## Development
 
