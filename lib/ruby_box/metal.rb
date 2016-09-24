@@ -2,7 +2,7 @@ require 'ruby_box'
 
 module RubyBox
   class Metal
-    extend MonitorMixin
+    SEMAPHORE = Mutex.new
 
     DEFAULT_TIMEOUT_SECONDS = 1
 
@@ -32,6 +32,14 @@ module RubyBox
       end
 
       private
+
+      def monitor
+        SEMAPHORE.synchronize { @monitor ||= Monitor.new }
+      end
+
+      def synchronize
+        monitor.synchronize { yield }
+      end
 
       def times_out_in(seconds)
         @timeout = seconds
