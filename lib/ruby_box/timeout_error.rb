@@ -1,6 +1,6 @@
 require 'ruby_box'
 
 module RubyBox
-  class Error < StandardError
+  class TimeoutError < Error
   end
 end

@@ -1,6 +1,6 @@
 require 'ruby_box'
 
 module RubyBox
-  class Error < StandardError
+  class ExecutionError < Error
   end
 end
