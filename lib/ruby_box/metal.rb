@@ -94,6 +94,7 @@ module RubyBox
 
     requires 'opal'
     requires 'opal-parser'
+    requires 'json'
 
     defines('Opal.exit') { |status| raise Error, "Exit with status #{status.inspect}" }
     defines('Opal.STDOUT.write_proc') { |data| stdout << data }
@@ -168,7 +169,43 @@ module RubyBox
     end
 
     def eval_source source
-      context.eval source
+      is_caught_value, serialized_value = context.eval <<-JAVASCRIPT
+        (function(evaluator, source) {
+          var isCaughtValue = false;
+          var value;
+
+          try{
+            value = evaluator(source);
+
+            if(value && typeof(value.$to_json) === 'function') {
+              value = value.$to_json();
+            }
+          }catch(error){
+            isCaughtValue = true;
+
+            if(error && typeof(error.$class) === 'function' && typeof(error.$message) === 'function') {
+              value = [error.$class().$name(), error.$message()];
+            }else{
+              value = error;
+            }
+          }
+
+          if(typeof(value) !== 'string') {
+            value = JSON.stringify(value);
+          }
+
+          return [isCaughtValue, value];
+        })(eval, #{source.to_json});
+      JAVASCRIPT
+
+      value = JSON.parse(serialized_value)
+
+      if is_caught_value
+        class_name, message = value
+        raise Error[class_name], message
+      else
+        value
+      end
     rescue MiniRacer::RuntimeError => error
       raise Error, error.message
     end

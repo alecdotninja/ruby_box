@@ -4,10 +4,10 @@ require 'thread'
 require 'monitor'
 
 require 'mini_racer'
+require 'json'
 require 'opal'
 
 module RubyBox
-  class Error < StandardError; end
-
+  autoload :Error, 'ruby_box/error'
   autoload :Metal, 'ruby_box/metal'
 end
