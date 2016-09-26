@@ -45,4 +45,5 @@ Rake::ExtensionTask.new do |ext|
   ext.lib_dir = 'vendor/gems/mini_racer/lib'
 end
 
+task :test => [:spec]
 task :default => [:compile, :test]
