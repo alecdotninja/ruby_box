@@ -37,6 +37,8 @@ class MySandbox < RubyBox::Metal
 
   # Executes some code in the sandbox to setup it's runtime state
   executes <<-RUBY
+    $global_state = 1337
+
     # Some boilerplate code
     class PlayThing
       attr_reader :name
@@ -69,12 +71,12 @@ RUBY
 # Every instance of the sandbox starts with the state configured on the class
 my_sandbox = MySandbox.new
 my_sandbox.execute(untrusted_program) #=> "Car"
+my_sandbox.execute('PlayThing.add(2,7)') #=> 9
 my_sandbox.stdout #=> ["Hello, world\n"]
 
 # Every instance of the sandbox is isolated
 another_sandbox = MySandbox.new
-my_sandbox.execute('$global_state') #=> nil
-
+another_sandbox.execute('$global_state') #=> 1337
 ```
 
 ## Development
