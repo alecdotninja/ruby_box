@@ -1,8 +1,15 @@
+dist: trusty
+sudo: true
+
+env:
+  global:
+    secure: PcD8YkHjlJ0U4FL1M0J2UH0CC5vWQMQM+h7z1QI5Pgf+exZ/upX0nRqwubf2rfaX2lapAJWrVi6ZE4eCnxFoesCToOOkUkBOblRKADcRDXwk4aUs7e3qgIDjnf2Onu2mXBnK86bOW2mnt7UJTOkgtnpapwBedceD4mjYR3UhcJnfASZ9Z1vZ8X+cLFNuM6J29zc1WDBM3KA9Chnvvu45dOaJS95MfnlFY+nM96/1Tw0fP1jcH9P66JpCgQZGWVI2nGa5cwDaVzzT2AhmLjrI+/BUX9Fus9lgWqYQEX1zS7KBTOUsNlfDP4v2cx/FLHZpzAJumJta10A/QuYQDlvMvixCWNlTdJZZxSWAo1PKGd47h5rE2UtCfhePcuX6ACwWF1C+a+rQrZi9tObquKn173OiH4SEvBwlRlANH9USwxC1H4WdaJBoAO7NvjWtT0qRsxbip5uT7Z1lYNGp9eOTVxE9mFlsP37palLD1pFr6fXM31a03+I6ZIefKlbHdWnHqQ/uDXuOklCjTinWCck2wUNy2Bs1Bxuzs3vE2m838JeVP8r5FbqoJ/AUNPeMCrBaftvkHEf+ZWTLkNmbg3zJTqdE2gGrcQoAMK/cYClD+HRcRembw8lDIX87LVYnCFVeioqm5KkTrz4Jafhyt7D+dGWOko4FXcPHMN9+dfKhdgc=
+
 language: ruby
 rvm:
   - 2.3.0
-dist: trusty
-sudo: true
+
 before_install:
   - gem install bundler -v 1.10.6
+
 cache: bundler
