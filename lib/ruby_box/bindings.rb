@@ -7,8 +7,8 @@ module RubyBox
     class_methods do
       def bindings
         @bindings ||= begin
-          if defined?(super)
-            super.dup
+          if superclass.respond_to?(:bindings)
+            superclass.bindings.dup
           else
             []
           end

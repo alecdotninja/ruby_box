@@ -12,8 +12,8 @@ module RubyBox
     class_methods do
       def maximum_execution_time
         @maximum_execution_time ||= begin
-          if defined?(super)
-            super
+          if superclass.respond_to?(:maximum_execution_time)
+            superclass.maximum_execution_time
           else
             DEFAULT_MAXIMUM_EXECUTION_TIME_SECONDS
           end
@@ -24,6 +24,8 @@ module RubyBox
         @snapshot ||= begin
           MiniRacer::Snapshot.new snapshot_source
         end
+      rescue MiniRacer::SnapshotError
+        raise ExecutionError, "The base snapshot for `#{name}` could not be created."
       end
 
       private

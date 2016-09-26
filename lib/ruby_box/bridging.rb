@@ -49,12 +49,11 @@ module RubyBox
               value = value.$to_json();
             }
           }catch(error){
-            isCaughtValue = true;
-
             if(error && typeof(error.$class) === 'function' && typeof(error.$message) === 'function') {
+              isCaughtValue = true;
               value = [error.$class().$name(), error.$message()];
             }else{
-              value = error;
+              throw error;
             }
           }
 
@@ -74,6 +73,8 @@ module RubyBox
       else
         value
       end
+    rescue RuntimeError => error
+      raise ExecutionError, error.message
     end
   end
 end

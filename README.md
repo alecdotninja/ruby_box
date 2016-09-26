@@ -45,7 +45,7 @@ RUBY
 
 my_sandbox = MySandbox.new
 my_sandbox.execute(untrusted_program) #=> "Car"
-my_sandbox.stdout #=> ["Hello, world"]
+my_sandbox.stdout #=> ["Hello, world\n"]
 
 ```
 

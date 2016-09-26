@@ -15,8 +15,8 @@ module RubyBox
     class_methods do
       def builder
         @builder ||= begin
-          if defined?(super)
-            super.dup
+          if superclass.respond_to?(:builder)
+            superclass.builder.dup
           else
             Opal::Builder.new compiler_options: { arity_check: true, dynamic_require_severity: :error }
           end
