@@ -8,6 +8,8 @@ module RubyBox
     extend ActiveSupport::Concern
 
     included do
+      requires 'native'
+      requires 'singleton'
       requires 'json'
 
       binds('Opal.exit') { |status| raise Error, "Exit with status #{status.inspect}" }
@@ -19,11 +21,48 @@ module RubyBox
         module RubyBox
           VERSION = #{VERSION.inspect}
 
+          class CurrentBoxProxy
+            include Singleton
+          end
+
           def self.boxed?
             true
           end
+
+          def self.current
+            CurrentBoxProxy.instance
+          end
         end
       RUBY
+    end
+
+    class_methods do
+      def exposes(*method_names)
+        method_names.each do |method_name|
+          handle = "Opal.RubyBox.CurrentBoxProxy.__exposed_method_#{method_name}"
+
+          wrapper = ->(serialized_args) do
+            args = JSON.parse(serialized_args)
+            value = send(method_name, *args)
+            value.to_json
+          end
+
+          binds(handle, wrapper)
+
+          executes <<-RUBY
+            class RubyBox::CurrentBoxProxy
+              define_method(#{method_name.inspect}) do |*args, &block|
+                raise ArgumentError, 'Cannot pass block to bridged method `RubyBox::CurrentBoxProxy##{method_name}`' unless block.nil?
+
+                serialized_args = args.to_json
+                serialized_value = Native(`#{handle}`).call(serialized_args)
+
+                JSON.parse(serialized_value)
+              end
+            end
+          RUBY
+        end
+      end
     end
 
     def stdout
@@ -65,7 +104,7 @@ module RubyBox
         })(eval, #{source.to_json});
       JAVASCRIPT
 
-      value = JSON.parse(serialized_value)
+      value = JSON.parse(serialized_value) if serialized_value
 
       if is_caught_value
         class_name, message = value

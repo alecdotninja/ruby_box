@@ -52,18 +52,6 @@ module RubyBox
       @builder ||= self.class.builder.dup
     end
 
-    def use(gem_name)
-      execute_newly_processed_dependencies { builder.use_gem gem_name }
-    rescue SyntaxError => error
-      raise CompilationError, error.message
-    end
-
-    def require(path)
-      execute_newly_processed_dependencies { builder.build path }
-    rescue SyntaxError => error
-      raise CompilationError, error.message
-    end
-
     def execute(source)
       execute_newly_processed_dependencies { builder.build_str source, '(execute)' }
     rescue SyntaxError => error

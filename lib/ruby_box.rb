@@ -19,6 +19,10 @@ module RubyBox
     false
   end
 
+  def self.current
+    nil
+  end
+
   def execute(*args, &block)
     Metal.execute(*args, &block)
   end

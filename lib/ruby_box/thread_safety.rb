@@ -66,19 +66,7 @@ module RubyBox
       synchronize { super }
     end
 
-    def use(*)
-      synchronize { super }
-    end
-
-    def require(*)
-      synchronize { super }
-    end
-
     def execute(*)
-      synchronize { super }
-    end
-
-    def bind(*)
       synchronize { super }
     end
 

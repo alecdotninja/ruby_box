@@ -30,6 +30,8 @@ module RubyBox
       end
     end
 
+    private
+
     def bind(target, proc = Proc.new)
        context.attach(target, proc)
     end

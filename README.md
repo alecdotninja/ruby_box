@@ -1,6 +1,6 @@
 # RubyBox
 
-RubyBox allows the execution of untrusted Ruby code safely in a sandbox.
+RubyBox allows the execution of untrusted Ruby code safely in a sandbox. It works by compiling Ruby code to JavaScript using [`opal`](https://github.com/opal/opal) and executing in [Google's V8 Engine](https://github.com/cowboyd/libv8) with some help from (`mini_racer`)[https://github.com/discourse/mini_racer/tree/6fbec25677d1fb14f8a5b6c4ba10fbccf4285307].
 
 ## Installation
 
@@ -21,6 +21,7 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
+# `RubyBox::Metal` is the sandbox base class. It has only the bare essentials to get the environment working.
 class MySandbox < RubyBox::Metal
   # Code in the sandbox will block at most one second
   times_out_in 1.second
@@ -31,6 +32,9 @@ class MySandbox < RubyBox::Metal
   # Requires the Opal compiler inside the sandbox (enables advanced runtime meta-programming like `Kernel#eval`)
   requires 'opal-parser'
 
+  # Exposes the #native_add method to code running inside the sandbox
+  exposes :native_add
+
   # Executes some code in the sandbox to setup it's runtime state
   executes <<-RUBY
     # Some boilerplate code
@@ -40,8 +44,17 @@ class MySandbox < RubyBox::Metal
       def initialize(name)
         @name = name
       end
+
+      # Code inside of the sandbox can get a handle on the box with `RubyBox.current` and call exposed methods
+      def add(a, b)
+        RubyBox.current.native_add(a, b)
+      end
     end
   RUBY
+
+  def native_add(a, b)
+    a + b
+  end
 end
 
 untrusted_program = <<-RUBY

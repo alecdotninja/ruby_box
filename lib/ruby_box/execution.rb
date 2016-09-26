@@ -5,8 +5,6 @@ require 'mini_racer'
 
 module RubyBox
   module Execution
-    DEFAULT_MAXIMUM_EXECUTION_TIME_SECONDS = 1
-
     extend ActiveSupport::Concern
 
     class_methods do
@@ -15,7 +13,7 @@ module RubyBox
           if superclass.respond_to?(:maximum_execution_time)
             superclass.maximum_execution_time
           else
-            DEFAULT_MAXIMUM_EXECUTION_TIME_SECONDS
+            nil
           end
         end
       end
