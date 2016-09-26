@@ -42,7 +42,7 @@ module RubyBox
           handle = "Opal.RubyBox.CurrentBoxProxy.__exposed_method_#{method_name}"
 
           wrapper = ->(serialized_args) do
-            args = JSON.parse(serialized_args)
+            args = JSON.parse(serialized_args, quirks_mode: true)
             value = send(method_name, *args)
             value.to_json
           end
