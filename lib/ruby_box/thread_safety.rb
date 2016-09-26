@@ -49,6 +49,10 @@ module RubyBox
         synchronize { super }
       end
 
+      def exposes(*)
+        synchronize { super }
+      end
+
       def synchronize
         monitor.synchronize { yield }
       end
