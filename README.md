@@ -1,6 +1,6 @@
 # RubyBox
 
-[![Build Status](https://travis-ci.org/anarchocurious/ruby_box.svg?branch=master)](https://travis-ci.org/anarchocurious/active_record_distinct_on) [![Code Climate](https://codeclimate.com/github/anarchocurious/ruby_box/badges/gpa.svg)](https://codeclimate.com/github/anarchocurious/ruby_box) [![Test Coverage](https://codeclimate.com/github/anarchocurious/ruby_box/badges/coverage.svg)](https://codeclimate.com/github/anarchocurious/ruby_box/coverage)
+[![Build Status](https://travis-ci.org/anarchocurious/ruby_box.svg?branch=master)](https://travis-ci.org/anarchocurious/active_record_distinct_on) [![Code Climate](https://codeclimate.com/github/anarchocurious/ruby_box/badges/gpa.svg)](https://codeclimate.com/github/anarchocurious/ruby_box) [![Test Coverage](https://codeclimate.com/github/anarchocurious/ruby_box/badges/coverage.svg)](https://codeclimate.com/github/anarchocurious/ruby_box/coverage) [![Security](https://hakiri.io/github/anarchocurious/ruby_box/master.svg)](https://hakiri.io/github/anarchocurious/ruby_box/master)
 
 RubyBox allows the execution of untrusted Ruby code safely in a sandbox. It works by compiling Ruby code to JavaScript using [`opal`](https://github.com/opal/opal) and executing it in [Google's V8 Engine](https://github.com/cowboyd/libv8) with some help from [`mini_racer`](https://github.com/discourse/mini_racer/tree/6fbec25677d1fb14f8a5b6c4ba10fbccf4285307).
 
