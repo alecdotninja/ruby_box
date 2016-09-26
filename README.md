@@ -86,6 +86,10 @@ another_sandbox.stderr #=> ["This looks dangerous\n"]
 
 # Exceptions comes through as subclasses of RubyBox::BoxedError
 another_sandbox.execute('nil.no_method') #=> RubyBox::BoxedError::BoxedNoMethodError
+
+# You can determine if you are in a sandbox using `RubyBox.boxed?` and `RubyBox.current`
+RubyBox.boxed? #=> false
+RubyBox.current #=> nil
 ```
 
 ## Development

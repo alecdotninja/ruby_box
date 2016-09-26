@@ -70,5 +70,9 @@ describe RubyBox do
 
     # Exceptions comes through as subclasses of RubyBox::BoxedError
     expect { another_sandbox.execute('nil.no_method') }.to raise_error RubyBox::BoxedError
+
+    # You can determine if you are in a sandbox using `RubyBox.boxed?` and `RubyBox.current`
+    expect(RubyBox.boxed?).to be_falsey
+    expect(RubyBox.current).to be_nil
   end
 end
