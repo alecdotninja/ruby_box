@@ -22,8 +22,16 @@ Or install it yourself as:
 
 ```ruby
 class MySandbox < RubyBox::Metal
+  # Code in the sandbox will block at most one second
   times_out_in 1.second
-  
+
+  # Makes the opal gem available for requiring inside the sandbox
+  uses 'opal'
+
+  # Requires the Opal compiler inside the sandbox (enables advanced runtime meta-programming like `Kernel#eval`)
+  requires 'opal-parser'
+
+  # Executes some code in the sandbox to setup it's runtime state
   executes <<-RUBY
     # Some boilerplate code
     class PlayThing
@@ -37,15 +45,22 @@ class MySandbox < RubyBox::Metal
 end
 
 untrusted_program = <<-RUBY
+  $global_state = 'tainted'
+
   puts "Hello, world"
   
   car = PlayThing.new("Car")
   car.name
 RUBY
 
+# Every instance of the sandbox starts with the state configured on the class
 my_sandbox = MySandbox.new
 my_sandbox.execute(untrusted_program) #=> "Car"
 my_sandbox.stdout #=> ["Hello, world\n"]
+
+# Every instance of the sandbox is isolated
+another_sandbox = MySandbox.new
+my_sandbox.execute('$global_state') #=> nil
 
 ```
 

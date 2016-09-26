@@ -8,8 +8,8 @@ module RubyBox
     extend ActiveSupport::Concern
 
     included do
+      uses 'opal'
       requires 'opal'
-      requires 'opal-parser'
     end
 
     class_methods do
