@@ -57,7 +57,7 @@ module RubyBox
                 serialized_args = args.to_json
                 serialized_value = Native(`#{handle}`).call(serialized_args)
 
-                JSON.parse(serialized_value)
+                JSON.parse(serialized_value, quirks_mode: true)
               end
             end
           RUBY
@@ -104,7 +104,7 @@ module RubyBox
         })(eval, #{source.to_json});
       JAVASCRIPT
 
-      value = JSON.parse(serialized_value) if serialized_value
+      value = JSON.parse(serialized_value, quirks_mode: true) if serialized_value
 
       if is_caught_value
         class_name, message = value
