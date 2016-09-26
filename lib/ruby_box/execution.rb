@@ -29,7 +29,7 @@ module RubyBox
       private
 
       def snapshot_source
-        ''
+        raise NotImplementedError
       end
 
       def times_out_in(seconds)

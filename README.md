@@ -79,6 +79,13 @@ my_sandbox.stdout #=> ["Hello, world\n"]
 # Every instance of the sandbox is isolated
 another_sandbox = MySandbox.new
 another_sandbox.execute('$global_state') #=> 1337
+
+# It also has an stderr
+another_sandbox.execute('warn "This looks dangerous"')
+another_sandbox.stderr #=> ["This looks dangerous\n"]
+
+# Exceptions comes through as subclasses of RubyBox::BoxedError
+another_sandbox.execute('nil.no_method') #=> RubyBox::BoxedError::BoxedNoMethodError
 ```
 
 ## Development

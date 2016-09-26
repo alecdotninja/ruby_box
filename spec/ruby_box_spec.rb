@@ -63,5 +63,12 @@ describe RubyBox do
     # Every instance of the sandbox is isolated
     another_sandbox = MySandbox.new
     expect(another_sandbox.execute('$global_state')).to be_nil
+
+    # It also has an stderr
+    another_sandbox.execute('warn "This looks dangerous"')
+    expect(another_sandbox.stderr).to eq(["This looks dangerous\n"])
+
+    # Exceptions comes through as subclasses of RubyBox::BoxedError
+    expect { another_sandbox.execute('nil.no_method') }.to raise_error RubyBox::BoxedError
   end
 end
