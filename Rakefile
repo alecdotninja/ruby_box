@@ -36,14 +36,5 @@ task :benchmark do
   end
 end
 
-# TODO: Remove when mini_racer with Snapshot is officially released
-require 'rake/extensiontask'
-Rake::ExtensionTask.new do |ext|
-  ext.name = 'mini_racer_extension'
-
-  ext.ext_dir = 'vendor/gems/mini_racer/ext/mini_racer_extension'
-  ext.lib_dir = 'vendor/gems/mini_racer/lib'
-end
-
 task :test => [:spec]
-task :default => [:compile, :test]
+task :default => [:test]

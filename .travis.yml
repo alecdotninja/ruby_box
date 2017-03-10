@@ -1,5 +1,4 @@
 dist: trusty
-sudo: true
 
 env:
   global:
@@ -7,9 +6,14 @@ env:
 
 language: ruby
 rvm:
-  - 2.3.0
+  - 2.4.0
 
 before_install:
-  - gem install bundler -v 1.10.6
+  - gem install bundler -v 1.14.6
+
+script:
+  - bundle install
+  - bundle exec rake spec
+  - bundle exec codeclimate-test-reporter
 
 cache: bundler

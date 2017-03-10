@@ -18,18 +18,11 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.3.0'
 
-  # spec.add_dependency 'mini_racer', '~> version with snapshots'
-  # TODO: Remove when mini_racer with Snapshot is officially released
-  spec.add_dependency 'libv8', '~> 5.1'
-  spec.files         += Dir['vendor/gems/mini_racer/lib/**/*'] + Dir['vendor/gems/mini_racer/ext/**/*']
-  spec.require_paths += %w{ vendor/gems/mini_racer/lib vendor/gems/mini_racer/ext }
-  spec.extensions     = %w{ vendor/gems/mini_racer/ext/mini_racer_extension/extconf.rb }
-  spec.add_development_dependency 'rake-compiler'
-
+  spec.add_dependency 'mini_racer', '~> 0.1'
   spec.add_dependency 'opal', '~> 0.10'
   spec.add_dependency 'activesupport', '>= 4.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.10'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'

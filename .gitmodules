@@ -1,3 +1,0 @@
-[submodule "vendor/gems/mini_racer"]
-	path = vendor/gems/mini_racer
-	url = https://github.com/discourse/mini_racer.git
